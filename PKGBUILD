@@ -1,11 +1,11 @@
 # Maintainer: Ben Schneider <ben@bens.haus>
 
 pkgbase=linux-rpi5
-pkgver=7.0.11
-_commit=ee5f7fa865b6c7f179bcdf933d69f6e261deed97
+pkgver=7.0.12
+_commit=b3fca41022d974876a0c98a788bdf5afb0865905
 _bluezcommit=cdf61dc691a49ff01a124752bd04194907f0f9cd
 _srcname=linux-rpi
-pkgrel=2
+pkgrel=1
 pkgdesc='Vendor kernel and modules for Raspberry Pi 5'
 arch=(aarch64)
 url='https://www.raspberrypi.com/'
@@ -23,7 +23,7 @@ source=(
   "BCM4345C0.hcd::https://raw.githubusercontent.com/RPi-Distro/bluez-firmware/$_bluezcommit/debian/firmware/broadcom/BCM4345C0.hcd"
   "config.txt"
 )
-sha256sums=('421faa56e48e1c7bbc6c9d97f28a40509d07939d1f0bcc6a37af2bb3c9f399df'
+sha256sums=('d2eaf336480938f540b8345cda7136cb3558cc5e3d3e810f51fd8ff58367dceb'
             '51c45e77ddad91a19e96dc8fb75295b2087c279940df2634b23baf71b6dea42c'
             '7672f8dcf1e326420f38a44a3116dd66b5e149d5124bc37e3a91db7cea7276f6')
 
@@ -73,6 +73,8 @@ prepare() {
   scripts/config --enable CONFIG_HUGETLBFS
   scripts/config --enable CONFIG_ZSWAP_COMPRESSOR_DEFAULT_ZSTD
   scripts/config --set-val CONFIG_ZSWAP_COMPRESSOR_DEFAULT "zstd"
+  scripts/config --enable CONFIG_MODULE_COMPRESS_ZSTD
+  
   scripts/config --enable CONFIG_KSM
   scripts/config --refresh
   make -s kernelrelease > version
