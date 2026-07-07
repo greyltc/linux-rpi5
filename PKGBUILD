@@ -2,10 +2,10 @@
 
 pkgbase=linux-rpi5
 pkgver=7.1.2
-_commit=0743276e84c915007b0257998ab9a44b99940b55
+_commit=50b2ef9919298808c7aff0d8ace55eb4f98db87e
 _bluezcommit=cdf61dc691a49ff01a124752bd04194907f0f9cd
 _srcname=linux-rpi
-pkgrel=1
+pkgrel=2
 pkgdesc='Vendor kernel and modules for Raspberry Pi 5'
 arch=(aarch64)
 url='https://www.raspberrypi.com/'
@@ -23,7 +23,7 @@ source=(
   "BCM4345C0.hcd::https://raw.githubusercontent.com/RPi-Distro/bluez-firmware/$_bluezcommit/debian/firmware/broadcom/BCM4345C0.hcd"
   "config.txt"
 )
-sha256sums=('6d1bf831413b25ab44ff9c343d0467a32a886f36347ff41f0e5c84070ca200f8'
+sha256sums=('3fd4aaa797eff9d2343f658adc6612817c44274787cef778b0ac9fc1ca6af747'
             '51c45e77ddad91a19e96dc8fb75295b2087c279940df2634b23baf71b6dea42c'
             '7672f8dcf1e326420f38a44a3116dd66b5e149d5124bc37e3a91db7cea7276f6')
 
@@ -48,8 +48,8 @@ prepare() {
   cd "${srcdir}/${_srcname}"
 
   echo "Setting version..."
-  echo "${pkgbase#linux}" > localversion.10-pkgname
-  echo "-$pkgrel" > localversion.20-pkgrel
+  echo "-$pkgrel" > localversion.10-pkgrel
+  echo "${pkgbase#linux}" > localversion.20-pkgname
 
   echo "Setting config..."
 
