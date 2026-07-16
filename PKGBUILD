@@ -1,11 +1,11 @@
 # Maintainer: Ben Schneider <ben@bens.haus>
 
 pkgbase=linux-rpi5
-pkgver=7.1.2
-_commit=50b2ef9919298808c7aff0d8ace55eb4f98db87e
+pkgver=7.1.3
+_commit=78e5abac211fb463c5535700d5f7830875f27386
 _bluezcommit=cdf61dc691a49ff01a124752bd04194907f0f9cd
 _srcname=linux-rpi
-pkgrel=2
+pkgrel=1
 pkgdesc='Vendor kernel and modules for Raspberry Pi 5'
 arch=(aarch64)
 url='https://www.raspberrypi.com/'
@@ -23,7 +23,7 @@ source=(
   "BCM4345C0.hcd::https://raw.githubusercontent.com/RPi-Distro/bluez-firmware/$_bluezcommit/debian/firmware/broadcom/BCM4345C0.hcd"
   "config.txt"
 )
-sha256sums=('3fd4aaa797eff9d2343f658adc6612817c44274787cef778b0ac9fc1ca6af747'
+sha256sums=('3b0973038bd76962b91075e928d79243f3e9b8a6adfb57c01c14d83d49b43146'
             '51c45e77ddad91a19e96dc8fb75295b2087c279940df2634b23baf71b6dea42c'
             '7672f8dcf1e326420f38a44a3116dd66b5e149d5124bc37e3a91db7cea7276f6')
 
@@ -74,6 +74,8 @@ prepare() {
   scripts/config --enable CONFIG_ZSWAP_COMPRESSOR_DEFAULT_ZSTD
   scripts/config --set-val CONFIG_ZSWAP_COMPRESSOR_DEFAULT "zstd"
   scripts/config --enable CONFIG_MODULE_COMPRESS_ZSTD
+
+  scripts/config --enable CONFIG_EFI_ZBOOT
   
   scripts/config --enable CONFIG_KSM
   scripts/config --refresh
@@ -85,7 +87,7 @@ build() {
   cd "${srcdir}/${_srcname}"
   export KCFLAGS=' -mcpu=cortex-a76'
   export KCPPFLAGS=' -mcpu=cortex-a76'
-  make Image.gz dtbs modules
+  make vmlinuz.efi dtbs modules
 }
 
 _package() {
